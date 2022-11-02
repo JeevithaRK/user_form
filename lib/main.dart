@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:readmore/readmore.dart';
-//import 'package:user_form/checkbox.dart';
 
 void main() {
   runApp(const FormScreen());
@@ -9,7 +9,6 @@ void main() {
 class FormScreen extends StatelessWidget {
   const FormScreen({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -17,7 +16,7 @@ class FormScreen extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.green,
       ),
-      //home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(title: 'User Form'),
     );
   }
 }
@@ -34,15 +33,15 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   final formKey = GlobalKey<FormState>(); //key for form
   int _value = 1;
+
   bool? isChecked = false;
-  // final notifications = [
-  //   CheckboxSetting(title: 'Hi'),
-  //   CheckboxSetting(title: 'Hello'),
-  // ];
+
   String content =
       "I hereby authorise Pine Labs to collect and share my data and documents with Protium, for the purpose of processing of my loan application and to conduct credit checks, references, make enquiries at its sole discretion. I further authorise Pine Labs / Lender and its agents to share and obtain information, records from any Credit Rating Agencies, Databanks, Government / Statutory / Regulatory Authorities, bank, financial institutions, or any third party to verify my credit worthiness in connection with this Loan request or in case Lender requires to conduct additional / further checks to assess my eligibility for sanction of further limits in facility in the future and ongoing review";
   String content2 =
       "I/You hereby consent to Pinelabs being appointed as my/your authorised representative to receive your Credit Information on an ongoing basis for the purpose of offering financial services  up to 6 months from the date the consent is collected, I also agree with Experian Terms and Conditions.";
+
+  TextEditingController _date = TextEditingController();
   @override
   Widget build(BuildContext context) {
     //final double height = MediaQuery.of(context).size.height;
@@ -63,7 +62,7 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   Text(
@@ -74,10 +73,18 @@ class _MyHomePageState extends State<MyHomePage> {
                       color: Color(0xFF333333),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 18,
                   ),
                   TextFormField(
+                    key: Key('pan'),
+                    validator: (pan) {
+                      // if (pan!.isEmpty || !RegExp(r'^[0-9]+$').hasMatch(pan!)) {
+                      //   return 'Please enter correct PAN number';
+                      // } else {
+                      //   return null;
+                      // }
+                    },
                     decoration:
                         InputDecoration(labelText: "Business PAN Number"),
                   ),
@@ -85,18 +92,47 @@ class _MyHomePageState extends State<MyHomePage> {
                     height: 18,
                   ),
                   TextFormField(
+                    key: Key('fname'),
+                    validator: (fname) {
+                      // if (fname!.isEmpty ||
+                      //     !RegExp(r'^[a-z A-Z]+$').hasMatch(fname!)) {
+                      //   return 'Please enter correct name';
+                      // } else {
+                      //   return null;
+                      // }
+                    },
                     decoration: InputDecoration(labelText: "First Name"),
                   ),
                   SizedBox(
                     height: 18,
                   ),
                   TextFormField(
+                    key: Key('lname'),
+                    validator: (lname) {
+                      // if (lname!.isEmpty ||
+                      //     !RegExp(r'^[a-z A-Z]+$').hasMatch(lname!)) {
+                      //   return 'Please enter correct name';
+                      // } else {
+                      //   return null;
+                      // }
+                    },
                     decoration: InputDecoration(labelText: "Last Name"),
                   ),
                   SizedBox(
                     height: 18,
                   ),
                   TextFormField(
+                    autovalidateMode: AutovalidateMode.always,
+                    key: Key('email'),
+                    validator: (email) {
+                      // if (email!.isEmpty ||
+                      //     !RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w]{2,4}')
+                      //         .hasMatch(email!)) {
+                      //   return 'Please enter correct email ID';
+                      // } else {
+                      //   return null;
+                      // }
+                    },
                     decoration: InputDecoration(labelText: "Email ID"),
                   ),
                   SizedBox(
@@ -106,35 +142,52 @@ class _MyHomePageState extends State<MyHomePage> {
                   Row(
                     children: <Widget>[
                       Radio(
+                        key: Key('radiobutton1'),
                         value: 1,
                         groupValue: _value,
                         activeColor: Color(0xFF50D387),
                         onChanged: (value) {
-                          setState(() {
-                            _value = value as int;
-                          });
+                          // setState(() {
+                          //   _value = value as int;
+                          // });
                         },
                       ),
                       Text("Male"),
                       SizedBox(width: 20),
                       Radio(
+                        key: Key('radiobutton2'),
                         value: 2,
                         groupValue: _value,
                         activeColor: Color(0xFF50D387),
                         onChanged: (value) {
-                          setState(() {
-                            _value = value as int;
-                          });
+                          // setState(() {
+                          //   _value = value as int;
+                          // });
                         },
                       ),
                       Text("Female"),
                     ],
                   ),
                   TextFormField(
+                    key: Key('Date and Icon'),
+                    controller: _date,
                     decoration: InputDecoration(
                       labelText: "Date",
-                      //icon: Icon(Icons.calendar_today_outlined),
+                      icon: Icon(Icons.calendar_today_outlined),
                     ),
+                    // onTap: () async {
+                    //   DateTime? pickeddate = await showDatePicker(
+                    //       context: context,
+                    //       initialDate: DateTime.now(),
+                    //       firstDate: DateTime(2022),
+                    //       lastDate: DateTime(2100));
+                    //   if (pickeddate != null) {
+                    //     setState(() {
+                    //       _date.text =
+                    //           DateFormat('dd-MM-yyyy').format(pickeddate);
+                    //     });
+                    //   }
+                    // },
                   ),
                   SizedBox(
                     height: 20,
@@ -144,13 +197,14 @@ class _MyHomePageState extends State<MyHomePage> {
                       checkColor: Color(0xFF50D387),
                       value: isChecked,
                       onChanged: (value) {
-                        setState(() {
-                          isChecked = value as bool;
-                        });
+                        // setState(() {
+                        //   if (value != null) isChecked = value;
+                        // });
                       },
                     ),
                     title: ReadMoreText(
                       content,
+                      key: Key('ReadMore1'),
                       trimLines: 2,
                       textAlign: TextAlign.justify,
                       trimMode: TrimMode.Line,
@@ -172,15 +226,15 @@ class _MyHomePageState extends State<MyHomePage> {
                     leading: Checkbox(
                       checkColor: Color(0xFF50D387),
                       value: isChecked,
-                      tristate: true,
                       onChanged: (value) {
-                        setState(() {
-                          isChecked = value as bool;
-                        });
+                        // setState(() {
+                        //   isChecked = value as bool;
+                        // });
                       },
                     ),
                     title: ReadMoreText(
                       content2,
+                      key: Key('ReadMore2'),
                       trimLines: 2,
                       textAlign: TextAlign.justify,
                       trimMode: TrimMode.Line,
@@ -203,7 +257,14 @@ class _MyHomePageState extends State<MyHomePage> {
                     width: MediaQuery.of(context).size.width,
                     height: 48,
                     child: ElevatedButton(
-                      onPressed: () {},
+                      key: Key('Button'),
+                      onPressed: () {
+                        // if (formKey.currentState!.validate()) {
+                        //   final snackBar =
+                        //       SnackBar(content: Text('Submitting form'));
+                        //   _scaffoldKey.currentState!.showSnackBar(snackBar);
+                        // }
+                      },
                       child: Text('Continue'),
                       style: ElevatedButton.styleFrom(
                         primary: const Color(0xFF003323),
@@ -222,119 +283,3 @@ class _MyHomePageState extends State<MyHomePage> {
         ));
   }
 }
-
-// import 'package:flutter/material.dart';
-//
-// void main() {
-//   runApp(const MyApp());
-// }
-//
-// class MyApp extends StatelessWidget {
-//   const MyApp({Key? key}) : super(key: key);
-//
-//   // This widget is the root of your application.
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       title: 'Flutter Demo',
-//       theme: ThemeData(
-//         // This is the theme of your application.
-//         //
-//         // Try running your application with "flutter run". You'll see the
-//         // application has a blue toolbar. Then, without quitting the app, try
-//         // changing the primarySwatch below to Colors.green and then invoke
-//         // "hot reload" (press "r" in the console where you ran "flutter run",
-//         // or simply save your changes to "hot reload" in a Flutter IDE).
-//         // Notice that the counter didn't reset back to zero; the application
-//         // is not restarted.
-//         primarySwatch: Colors.blue,
-//       ),
-//       home: const MyHomePage(title: 'Flutter Demo Home Page'),
-//     );
-//   }
-// }
-//
-// class MyHomePage extends StatefulWidget {
-//   const MyHomePage({Key? key, required this.title}) : super(key: key);
-//
-//   // This widget is the home page of your application. It is stateful, meaning
-//   // that it has a State object (defined below) that contains fields that affect
-//   // how it looks.
-//
-//   // This class is the configuration for the state. It holds the values (in this
-//   // case the title) provided by the parent (in this case the App widget) and
-//   // used by the build method of the State. Fields in a Widget subclass are
-//   // always marked "final".
-//
-//   final String title;
-//
-//   @override
-//   State<MyHomePage> createState() => _MyHomePageState();
-// }
-//
-// class _MyHomePageState extends State<MyHomePage> {
-//   int _counter = 0;
-//
-//   void _incrementCounter() {
-//     setState(() {
-//       // This call to setState tells the Flutter framework that something has
-//       // changed in this State, which causes it to rerun the build method below
-//       // so that the display can reflect the updated values. If we changed
-//       // _counter without calling setState(), then the build method would not be
-//       // called again, and so nothing would appear to happen.
-//       _counter++;
-//     });
-//   }
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     // This method is rerun every time setState is called, for instance as done
-//     // by the _incrementCounter method above.
-//     //
-//     // The Flutter framework has been optimized to make rerunning build methods
-//     // fast, so that you can just rebuild anything that needs updating rather
-//     // than having to individually change instances of widgets.
-//     return Scaffold(
-//       appBar: AppBar(
-//         // Here we take the value from the MyHomePage object that was created by
-//         // the App.build method, and use it to set our appbar title.
-//         title: Text(widget.title),
-//       ),
-//       body: Center(
-//         // Center is a layout widget. It takes a single child and positions it
-//         // in the middle of the parent.
-//         child: Column(
-//           // Column is also a layout widget. It takes a list of children and
-//           // arranges them vertically. By default, it sizes itself to fit its
-//           // children horizontally, and tries to be as tall as its parent.
-//           //
-//           // Invoke "debug painting" (press "p" in the console, choose the
-//           // "Toggle Debug Paint" action from the Flutter Inspector in Android
-//           // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-//           // to see the wireframe for each widget.
-//           //
-//           // Column has various properties to control how it sizes itself and
-//           // how it positions its children. Here we use mainAxisAlignment to
-//           // center the children vertically; the main axis here is the vertical
-//           // axis because Columns are vertical (the cross axis would be
-//           // horizontal).
-//           mainAxisAlignment: MainAxisAlignment.center,
-//           children: <Widget>[
-//             const Text(
-//               'You have pushed the button this many times:',
-//             ),
-//             Text(
-//               '$_counter',
-//               style: Theme.of(context).textTheme.headline4,
-//             ),
-//           ],
-//         ),
-//       ),
-//       floatingActionButton: FloatingActionButton(
-//         onPressed: _incrementCounter,
-//         tooltip: 'Increment',
-//         child: const Icon(Icons.add),
-//       ), // This trailing comma makes auto-formatting nicer for build methods.
-//     );
-//   }
-// }
